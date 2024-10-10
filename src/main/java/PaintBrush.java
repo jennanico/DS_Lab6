@@ -65,13 +65,31 @@ set the "paint" for the paintbrush
    */
 	public void paint(int x, int y, Paint[][] mesh)
 	{
+		Paint myPaint = mesh[x][y];
+		Paint northPaint = mesh[x][y+1];
+		Paint southPaint = mesh[x][y-1];
+		Paint eastPaint = mesh[x+1][y];
+		Paint westPaint = mesh[x-1][y];
+		
 		if (mode == BrushMode.paintMode)
 		{	
 			mesh[x][y] = this.paint;
 		}
+		
 		else if (mode == BrushMode.fillMode)
 		{
-			//stuff
+			if (! myPaint.equals(northPaint) &&
+					! myPaint.equals(southPaint) &&
+					! myPaint.equals(eastPaint) &&
+					! myPaint.equals(westPaint))
+			{
+				mesh[x][y] = this.paint;
+			}
+			this.paint(x, y + 1, mesh);
+			this.paint(x, y - 1, mesh);
+			this.paint(x + 1, y, mesh);
+			this.paint(x - 1, y, mesh);
+	
 		}
 	}
 
