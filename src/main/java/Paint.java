@@ -5,6 +5,7 @@ abstract public class Paint
 {
 
    //returns the color of the paint	
+   // must be overriden
 	public abstract Color getColor();	
 	
    
