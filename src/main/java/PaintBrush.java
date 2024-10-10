@@ -69,6 +69,10 @@ set the "paint" for the paintbrush
 		{	
 			mesh[x][y] = this.paint;
 		}
+		else if (mode == BrushMode.fillMode)
+		{
+			//stuff
+		}
 	}
 
 	
