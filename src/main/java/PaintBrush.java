@@ -78,6 +78,11 @@ set the "paint" for the paintbrush
 		
 		else if (mode == BrushMode.pattern1Mode)
 		{
+			if (mesh[x][y].equals(White) || mesh[x][y].equals(Gold))
+			{
+				fillPaint(x, y, mesh, mesh[x][y]);
+			}
+			
 			patternPaint(x, y, mesh, mesh[x][y]);
 		}
 	}
@@ -115,11 +120,6 @@ set the "paint" for the paintbrush
 	
 	private void patternPaint(int x, int y, Paint[][] mesh, Paint ogPaint)
 	{
-	
-		if (mesh[x][y].equals(White))
-		{
-			fillPaint(x, y, mesh, ogPaint);
-		}
 		
 		if (mesh[x][y].equals(ogPaint))
 		{
