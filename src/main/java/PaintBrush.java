@@ -65,11 +65,6 @@ set the "paint" for the paintbrush
    */
 	public void paint(int x, int y, Paint[][] mesh)
 	{
-		Paint myPaint = mesh[x][y];
-		Paint northPaint = mesh[x][y+1];
-		Paint southPaint = mesh[x][y-1];
-		Paint eastPaint = mesh[x+1][y];
-		Paint westPaint = mesh[x-1][y];
 		
 		if (mode == BrushMode.paintMode)
 		{	
@@ -78,22 +73,85 @@ set the "paint" for the paintbrush
 		
 		else if (mode == BrushMode.fillMode)
 		{
-			if (! myPaint.equals(northPaint) &&
-					! myPaint.equals(southPaint) &&
-					! myPaint.equals(eastPaint) &&
-					! myPaint.equals(westPaint))
-			{
-				mesh[x][y] = this.paint;
-			}
-			this.paint(x, y + 1, mesh);
-			this.paint(x, y - 1, mesh);
-			this.paint(x + 1, y, mesh);
-			this.paint(x - 1, y, mesh);
-	
+			fillPaint(x, y, mesh, mesh[x][y]);
+		}
+		
+		else if (mode == BrushMode.pattern1Mode)
+		{
+			patternPaint(x, y, mesh, mesh[x][y]);
 		}
 	}
 
 	
+	private void fillPaint(int x, int y, Paint[][] mesh, Paint ogPaint)
+	{
+	
+		if (mesh[x][y].equals(ogPaint))
+		{
+			mesh[x][y] = this.paint;
+		}
+		else {return;}
+	
+		
+		if (x + 1 < mesh[0].length)
+		{
+			fillPaint(x + 1, y, mesh, ogPaint);
+		}
+		if (x - 1 > -1)
+		{
+			fillPaint(x - 1, y, mesh, ogPaint);
+		}
+		if (y + 1 < mesh.length)
+		{
+			fillPaint(x, y + 1, mesh, ogPaint);
+		}
+		if (y - 1 > -1)
+		{
+			fillPaint(x, y - 1, mesh, ogPaint);
+		}
+		
+	}
+	
+	
+	private void patternPaint(int x, int y, Paint[][] mesh, Paint ogPaint)
+	{
+	
+		if (mesh[x][y].equals(White))
+		{
+			fillPaint(x, y, mesh, ogPaint);
+		}
+		
+		if (mesh[x][y].equals(ogPaint))
+		{
+			if (x % 2 == 0)
+			{
+				mesh[x][y] = White;
+			}
+			else
+			{
+				mesh[x][y] = Gold;
+			}
+		}
+		else {return;}
+	
+		
+		if (x + 1 < mesh[0].length)
+		{
+			patternPaint(x + 1, y, mesh, ogPaint);
+		}
+		if (x - 1 > -1)
+		{
+			patternPaint(x - 1, y, mesh, ogPaint);
+		}
+		if (y + 1 < mesh.length)
+		{
+			patternPaint(x, y + 1, mesh, ogPaint);
+		}
+		if (y - 1 > -1)
+		{
+			patternPaint(x, y - 1, mesh, ogPaint);
+		}
+	}
 	
 /*
    set the drawing mode of the paint brush.
